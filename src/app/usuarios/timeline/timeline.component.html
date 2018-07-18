@@ -1,0 +1,17 @@
+<h5>Timeline dos Usuarios</h5>
+<br>
+<div class="row">
+	<div class="input-field col s12 m6 l6">
+	    <select [(ngModel)]="usuarioSelecionado">
+	      <option value="" disabled selected>Selecione o Usuario</option>
+	      <option *ngFor="let usuario of usuarios" [ngValue]="usuario">{{ usuario.nome }}</option>
+	    </select>
+	    <label>Materialize Select</label>
+	</div>
+	<div class="col s12 m6 l6">
+		<p>Nome: {{usuario?.nome}}</p>
+		<p>Email: {{ usuario?.email }}</p>
+		<p>Telefone: {{ usuario?.telefone }}</p>
+	</div>
+</div>
+<div class="col s12" id="visualization"></div>

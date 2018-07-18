@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+body{
+	background-color: #f7f7f7;
+}
+.marginTop{
+	margin-top: 20px !important;
+}
+.marginBottom{
+	margin-bottom: 10px;
+}
+.imgLogo{
+	max-width: 140px;
+}
+.imgLogin{
+	max-width: 170px;
+}

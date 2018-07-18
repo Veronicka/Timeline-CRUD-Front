@@ -1,0 +1,49 @@
+<div class="row">
+	<div class="col s6">
+		<div class="row">
+			<div class="col s6">
+				<h5>Lista de Usuarios</h5>
+			</div>
+			<div class="col s6">
+				<a class="waves-effect waves-light btn" (click)="novoUsuario()">Novo</a>
+			</div>
+		</div>
+		<ul class="collection">
+			<li class="collection-item avatar" 
+				*ngFor="let usuario of usuarios">
+				<i class="material-icons circle orange darken-2">tag_faces</i>
+				<span class="title">{{ usuario.nome }}</span>
+				<p>{{ usuario.email }} <br>
+				 {{ usuario.detalhe }}
+				</p>
+				<a class="secondary-content btn-floating red darken-2" (click)="usuarioSelecionado(usuario)">
+					<i class="material-icons">add</i>
+				</a>
+		    </li>
+		</ul>
+	</div>
+
+	<div class="col s6">
+		<label *ngIf="estaSelec" class="center">
+			<h5>Selecione um usuário para ver os detalhes.</h5>
+		</label>
+		<div *ngIf="!estaSelec">
+			<h5>Detalhes do Usuario</h5>
+			<br>
+			<p>Id: {{ usuario.id }}</p>
+			<p>Nome: {{ usuario.nome }}</p>
+			<p>Email: {{ usuario.email }}</p>
+
+			<div class="row">
+				<div class="col s6">
+					<a class="waves-effect waves-light btn orange lighten-2" 
+						(click)="editarUsuario()">Editar</a>
+				</div>
+				<div class="col s6">
+					<a class="waves-effect waves-light btn red darken-2" 
+						(click)="deletar(usuario)">Deletar Usuario</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

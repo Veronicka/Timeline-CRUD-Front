@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col s12 m4 offset-m4 marginTop">
+    <div class="card center">
+      <div class="card-content">
+        <img class="imgLogin" src="./assets/images/logo-justto.png">
+        <div class="row">
+            <div class="input-field col s12">
+              <input [(ngModel)]="usuario.nome" id="usuario" type="text" class="validate">
+              <label class="active" for="usuario">Usuário</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+              <input [(ngModel)]="usuario.senha" id="senha" type="password" class="validate">
+              <label class="active" for="senha">Senha</label>
+            </div>
+        </div>
+        
+        <button class="btn waves-effect waves-light red darken-2" 
+            type="submit" name="action" (click)="fazerLogin()">
+            Logar
+            <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

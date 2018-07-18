@@ -1,0 +1,23 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<ul id="dropdown1" class="dropdown-content">
+  <li><a>Logout</a></li>
+</ul>
+<nav *ngIf="mostrarMenu marginBottom">
+  <div class="nav-wrapper red darken-2">
+    <a href="#" class="brand-logo center">
+      <img class="imgLogo" src="{{ image }}">
+    </a>
+    <ul id="nav-mobile" class="left hide-on-med-and-down">
+      <li routerLinkActive="active"><a routerLink="">Home</a></li>
+      <li routerLinkActive="active"><a routerLink="/usuarios">Lista Usuarios</a></li>
+      <li routerLinkActive="active"><a routerLink="/usuarios/timeline">Timeline</a></li>
+    </ul>
+    <ul class="right hide-on-med-and-down">
+      <li><a materialize="dropdown" data-activates='dropdown1' class="dropdown-trigger" (click)="fazerLogout()"><i class="material-icons right">more_vert</i></a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container marginTop">
+  <router-outlet></router-outlet>
+</div>
