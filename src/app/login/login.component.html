@@ -2,26 +2,45 @@
   <div class="col s12 m4 offset-m4 marginTop">
     <div class="card center">
       <div class="card-content">
-        <img class="imgLogin" src="./assets/images/logo-justto.png">
-        <div class="row">
-            <div class="input-field col s12">
-              <input [(ngModel)]="usuario.nome" id="usuario" type="text" class="validate">
-              <label class="active" for="usuario">Usuário</label>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="input-field col s12">
-              <input [(ngModel)]="usuario.senha" id="senha" type="password" class="validate">
-              <label class="active" for="senha">Senha</label>
+        <form materialize (ngSubmit)="onSubmit()" #usuarioForm="ngForm">
+          <img class="imgLogin" src="./assets/images/logo-justto.png">
+          <div class="row">
+              <div class="input-field col s12">
+                <input id="usuario" type="email" class="validate" 
+                  required [(ngModel)]="usuario.email" name="email" #email="ngModel">
+                <label class="active" for="usuario">Usuário</label>
+              </div>
+              <div [hidden]="email.valid || email.pristine"
+                class="alert alert-danger red-text">Email necessário
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="input-field col s12">
+                <input id="senha" type="password" class="validate"
+                  required [(ngModel)]="usuario.senha" name="senha" #senha="ngModel">
+                <label class="active" for="senha">Senha</label>
+              </div>
+              <div [hidden]="senha.valid || senha.pristine"
+                class="alert alert-danger red-text">Senha necessária
+              </div>
+          </div>
+
+          <div class="row">
+            <div class="col s12 m6 l6">
+              <button class="btn waves-effect waves-light red darken-2 btn-small btnSize" 
+                  type="submit" name="action" [disabled]="!usuarioForm.form.valid">Logar
+              </button>
             </div>
-        </div>
-        
-        <button class="btn waves-effect waves-light red darken-2" 
-            type="submit" name="action" (click)="fazerLogin()">
-            Logar
-            <i class="material-icons right">send</i>
-        </button>
+            <div class="col s12 m6 l6">
+              <button class="btn waves-effect waves-light btn-small btnSize" 
+                  type="button" (click)="registrar()">Registrar
+              </button>
+            </div>
+          </div>
+
+        </form>
       </div>
     </div>
   </div>

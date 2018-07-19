@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { UsuariosService } from './usuarios.service';
+import { MaterializeDirective } from 'angular2-materialize'
 
+import { UsuariosService } from './usuarios.service';
 import { Usuario } from './usuario';
 
 @Component({

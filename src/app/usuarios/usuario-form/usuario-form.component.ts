@@ -14,8 +14,6 @@ import { Usuario } from '../usuario';
 export class UsuarioFormComponent implements OnInit {
   @Input() usuario: Usuario;
 
-  id: number;
-	inscricao: Subscription;
   func: string;
 
   constructor(

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MaterializeDirective } from 'angular2-materialize';
 
 import { UsuariosComponent } from './usuarios.component';
 import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
@@ -15,12 +16,13 @@ import { TimelineComponent } from './timeline/timeline.component';
 		FormsModule,
 		UsuariosRoutingModule
 	],
-	exports: [],
 	declarations: [
+		MaterializeDirective,
 		UsuariosComponent,
 		UsuarioFormComponent,
 		TimelineComponent
 	],
 	providers: [UsuariosService, LogOperacoesService],
+	exports: [MaterializeDirective]
 })
 export class UsuariosModule {}

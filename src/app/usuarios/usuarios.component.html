@@ -1,5 +1,5 @@
-<div class="row">
-	<div class="col s6">
+<div class="row" [hidden]="!usuarios">
+	<div class="col s12 m12 l6">
 		<div class="row">
 			<div class="col s6">
 				<h5>Lista de Usuarios</h5>
@@ -23,7 +23,7 @@
 		</ul>
 	</div>
 
-	<div class="col s6">
+	<div class="col s12 m12 l6">
 		<label *ngIf="estaSelec" class="center">
 			<h5>Selecione um usuário para ver os detalhes.</h5>
 		</label>

@@ -6,14 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common'; 
 import localePt from '@angular/common/locales/pt'; registerLocaleData(localePt, 'pt');﻿
 
-import { MaterializeModule } from 'angular2-materialize';
-import { AngularWebStorageModule } from 'angular-web-storage';
-
 import { AppRoutingModule } from './app.routing.module';
 import { HomeComponent } from './home/home.component';
+import { RegistroComponent } from './registro/registro.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './login/auth.service';
+import { AutenticacaoService } from './login/autenticacao.service';
 import { SettingsService } from './settings.service';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -21,14 +20,13 @@ import { AuthGuard } from './guards/auth.guard';
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    RegistroComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    MaterializeModule,
     AppRoutingModule,
-    AngularWebStorageModule,
     HttpClientModule
   ],
   providers: [
@@ -39,8 +37,10 @@ import { AuthGuard } from './guards/auth.guard';
       useFactory: (settingsService) => settingsService.getLocale()
     },
     AuthService, 
+    AutenticacaoService,
     AuthGuard
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: []
 })
 export class AppModule { }

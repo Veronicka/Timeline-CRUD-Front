@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
+import { MaterializeDirective } from 'angular2-materialize';
+
 import 'hammerjs';
 import * as vis from 'vis';
 import swal from 'sweetalert2';
 
 import { Usuario } from '../usuario';
+import { LogOperacoes } from './log-operacoes';
 import { UsuariosService } from '../usuarios.service';
 import { LogOperacoesService } from './log-operacoes.service';
 
@@ -16,30 +19,45 @@ import { LogOperacoesService } from './log-operacoes.service';
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent implements OnInit {
-	private usuarioSelecionado: Usuario;
-	private usuarios: any[];
-	private items: vis.DataSet;
-
+	usuarioSelecionado: any;
+	usuario: Usuario;
+	usuarios: any[];
+	logsOp: LogOperacoes[];
+	items: vis.DataSet;
+	
 	day = new Date();
 	min = this.day.setHours(0); // 0 horas
   	max = this.day.setHours(23); // 23:59 horas
 
 	constructor(
 	  	private route: ActivatedRoute,
-	  	private usuariosService: UsuariosService) {
-	}
+	  	private usuariosService: UsuariosService,
+	  	private logOperacoesService: LogOperacoesService) { }
 
 	loadTimeline(data){
-		console.log(data);
 		var d = [];
 		for(var i = 0; i<data.length; i++){
-			d.push({id: i,
-				   start: new Date(), 
-				   content: data[i].nome,
-				   email: data[i].email
+			d.push({id: data[i].id,
+				   start: data[i].dataHora, 
+				   content: this.usuario.nome+" "+data[i].detalhe,
+				   nome: this.usuario.nome,
+				   email: this.usuario.email,
+				   telefone: this.usuario.telefone
 			});
 		}
 		return d;
+	}
+
+	onChange(value){
+		this.items.clear();
+		if(value !== null){
+			this.usuario = value;
+			this.logOperacoesService.getLogByUserId(this.usuario.id)
+		      .subscribe((logs) => {
+		        this.logsOp = logs;
+		        this.items.add(this.loadTimeline(logs));
+		    });
+	  	}
 	}
 	
 	ngOnInit() {
@@ -49,7 +67,6 @@ export class TimelineComponent implements OnInit {
 		this.usuariosService.getUsuarios()
 	      .subscribe((users) => {
 	        this.usuarios = users;
-	        this.items.add(this.loadTimeline(users));
 	    });
 
 	    let options = {
@@ -87,9 +104,11 @@ export class TimelineComponent implements OnInit {
 		    onUpdate: function (item, callback) {
 		    	swal({
 		    		title: item.content,
-		    		html: '<div align="left" style="margin-left: 3em"><p><p><b>Email: </b> '
-		    		+item.email+'</p><p><b>Data: </b>'
-		    		+item.start+'</p></div>'
+		    		html: '<div align="left" style="margin-left: 3em"><p><p><b>Nome: </b> '
+		    		+item.nome+'</p><p><b>Email: </b>'
+		    		+item.email+'</p><p><b>Telefone: </b>'
+		    		+item.telefone+'</p><p><b>Data/Hora: </b>'
+		    		+new Date(item.start)+'</p></div>'
 		    	}).then((ok)=>{
 		    		if (ok) {
 			          callback(item); // send back adjusted item
@@ -101,32 +120,6 @@ export class TimelineComponent implements OnInit {
 		    }
 		};
 		
-		//this.items = new vis.DataSet(this.loadTimeline(this.usuarios));
-
-		// Configuration for the Timeline
-		
-
-	 	// function prettyConfirm(title, text, callback) {
-		 //    swal({
-		 //      title: title,
-		 //      text: text,
-		 //      type: 'warning',
-		 //      showCancelButton: true,
-		 //      confirmButtonColor: "#DD6B55"
-		 //   	}).then(() => callback);
-	  //   }
-
-	  //   function prettyPrompt(title, text, inputValue, callback) {
-		 //    swal({
-		 //      title: title,
-		 //      text: text,
-		 //      type: 'input',
-		 //      showCancelButton: true,
-		 //      inputValue: inputValue
-		 //    }).then(() => callback);
-	  //   }
-
-		// Create a Timeline
 		new vis.Timeline(container, this.items, options);
 	}
 }

@@ -1,49 +1,46 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { SessionStorageService, SessionStorage } from 'angular-web-storage';
-import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+
+import { MessageService } from '../message.service';
 import { Usuario } from './usuario';
 
-@Injectable({
-  providedIn: 'root'
-})
+const HTTP_OPTIONS = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
+@Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  //KEY = 'value';
-	private usuarioAutenticado: boolean = false;
+  private API_URL: string = "http://localhost:8080/timelinecrud/login";
+  
+  constructor(private http: HttpClient, 
+      private messageService: MessageService) { }
 
-	mostrarMenuEmitter = new EventEmitter<boolean>();
-
-  constructor(private router: Router, public session: SessionStorageService) { }
-
-  fazerLogin(usuario: Usuario){
-  	if(usuario.nome === 'usuario@email.com' && usuario.senha === '123456'){
-  		this.usuarioAutenticado = true; 
-  		this.mostrarMenuEmitter.emit(true);
-  		this.router.navigate(['/']);
-  	}
-  	else {
-  		this.mostrarMenuEmitter.emit(false);
-  		this.usuarioAutenticado = false;
-  	}
+  /** POST: login a usuario to the server */
+  login(usuario: Usuario): Observable<Usuario> {
+    return this.http.post<Usuario>(`${this.API_URL}`, usuario, HTTP_OPTIONS).pipe(
+      tap(response => this.log('logged user')),
+      catchError(this.handleError<any>('not logged Usuario'))
+    );
   }
 
-  usuarioEstaAutenticado(){
-  	return this.usuarioAutenticado;
+  private handleError<T> (operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+   
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+   
+      // TODO: better job of transforming error for user consumption
+      this.log(`${operation} failed: ${error.message}`);
+   
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
 
-  // set(expired: number = 0) {
-  //       this.local.set(this.KEY, { a: 1, now: +new Date }, expired, 'n');
-  //   }
-
-  // remove() {
-  //     this.session.remove(this.KEY);
-  // }
-
-  // get() {
-  //     this.value = this.session.get(this.KEY);
-  // }
-
-  // clear() {
-  //     this.session.clear();
-  // }
+  private log(message: string) {
+    this.messageService.add(`UsuarioService: ${message}`);
+  }
 }

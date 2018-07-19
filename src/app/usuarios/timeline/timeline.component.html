@@ -1,12 +1,14 @@
 <h5>Timeline dos Usuarios</h5>
 <br>
-<div class="row">
+<div class="row" [hidden]="!usuarios">
 	<div class="input-field col s12 m6 l6">
-	    <select [(ngModel)]="usuarioSelecionado">
-	      <option value="" disabled selected>Selecione o Usuario</option>
-	      <option *ngFor="let usuario of usuarios" [ngValue]="usuario">{{ usuario.nome }}</option>
+	    <select materialize="material_select" [ngModel]="usuarioSelecionado" 
+	    	(ngModelChange)="onChange($event)" name="user"
+	    	[materializeSelectOptions]="usuarios">
+	      <option value="" disabled selected>Selecione</option>
+	      <option *ngFor="let u of usuarios" [ngValue]="u">{{ u.nome }}</option>
 	    </select>
-	    <label>Materialize Select</label>
+	    <label>Selecione o Usuário</label>
 	</div>
 	<div class="col s12 m6 l6">
 		<p>Nome: {{usuario?.nome}}</p>

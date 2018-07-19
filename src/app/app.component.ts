@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from './login/auth.service';
+import { AutenticacaoService } from './login/autenticacao.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,7 @@ export class AppComponent {
   mostrarMenu: boolean = false;
   image: string;
 
-  constructor(private authService: AuthService){
+  constructor(private authService: AutenticacaoService){
     this.image = './assets/images/logoJusttoLight.png';
   }
 
@@ -24,5 +24,6 @@ export class AppComponent {
 
   fazerLogout(){
     console.log("logout");
+    this.authService.logout();
   }
 }

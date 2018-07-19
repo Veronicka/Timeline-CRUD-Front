@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { RegistroComponent } from './registro/registro.component';
 
 const APP_ROUTES: Routes = [
 	{ 
@@ -16,6 +17,10 @@ const APP_ROUTES: Routes = [
 	{ 
 		path: 'login', 
 		component: LoginComponent 
+	},
+	{ 
+		path: 'registro', 
+		component: RegistroComponent
 	},
 	{ 
 		path: '', 

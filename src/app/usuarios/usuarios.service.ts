@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import { MessageService } from './message.service';
+import { MessageService } from '../message.service';
 
 import { Usuario } from './usuario';
 
@@ -16,12 +16,6 @@ export class UsuariosService {
 	private API_URL: string = "http://localhost:8080/timelinecrud/";
 
 	constructor(private http: HttpClient, private messageService: MessageService) { }
-
-	// private usuarios: any[] = [
-	// 	{id: 1, nome: 'Usuario 01', email: 'usuario01@email.com', dataHora: new Date()},
-	// 	{id: 2, nome: 'Usuario 02', email: 'usuario02@email.com', dataHora: new Date()},
-	// 	{id: 3, nome: 'Usuario 03', email: 'usuario03@email.com', dataHora: new Date()}
-	// ];
 
 	getUsuarios(): Observable<Usuario[]> {
 	    return this.http.get<Usuario[]>(this.API_URL + 'getAll')
